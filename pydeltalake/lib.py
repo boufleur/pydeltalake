@@ -7,7 +7,27 @@ from fsspec.implementations.local import LocalFileSystem
 
 
 class DeltaLake:
+    """An instance of containing a Delta Lake
+
+    This class provides an interface for Delta Lake
+    using python-like filesystems provided by fsspec.
+
+    """
+
     def __init__(self, path: str, filesystem=None, time_travel=None):
+        """Initializes a Delta Lake
+
+        Retrieves rows pertaining to the given keys from the Table instance
+        represented by table_handle.  String keys will be UTF-8 encoded.
+
+        Args:
+            path: the path to the table on the filesystem
+            filesystem: python-like filesystem (If unset, assume local)
+            time_travel: set the delta lake to a specific version
+
+        Returns:
+            An instance of a delta table.
+        """
         if not filesystem:
             self.filesystem = LocalFileSystem(path)
         else:
@@ -75,12 +95,12 @@ class DeltaLake:
     def _get_checkpoint_files(self):
         if "parts" in self.checkpoint_info.keys():
             checkpoint_files = [
-                f"{self.path}/_delta_log/{str(self.checkpoint_info['version']).zfill(20)}.checkpoint.{str(i).zfill(10)}.{str(self.checkpoint_info['parts']).zfill(10)}.parquet" # pylint: disable=line-too-long
+                f"{self.path}/_delta_log/{str(self.checkpoint_info['version']).zfill(20)}.checkpoint.{str(i).zfill(10)}.{str(self.checkpoint_info['parts']).zfill(10)}.parquet"  # pylint: disable=line-too-long
                 for i in range(1, self.checkpoint_info["parts"] + 1)
             ]
         else:
             checkpoint_files = [
-                f"{self.path}/_delta_log/{str(self.checkpoint_info['version']).zfill(20)}.checkpoint.parquet" # pylint: disable=line-too-long
+                f"{self.path}/_delta_log/{str(self.checkpoint_info['version']).zfill(20)}.checkpoint.parquet"  # pylint: disable=line-too-long
             ]
         return checkpoint_files
 
@@ -99,6 +119,15 @@ class DeltaLake:
             )
 
     def files(self):
+        """Fetches the parquet file list from the delta lake.
+
+        Provides a list of the parquet files on the delta lake on the
+        date specified during instantiation.
+
+        Returns:
+            A list of the parquet files on the delta lake.
+
+        """
         replay_checkpoint = True
         if self.timestamp:  # time travel needs to replay all
             replay_checkpoint = False
