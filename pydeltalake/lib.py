@@ -75,12 +75,12 @@ class DeltaLake:
     def _get_checkpoint_files(self):
         if "parts" in self.checkpoint_info.keys():
             checkpoint_files = [
-                f"{self.path}/_delta_log/{str(self.checkpoint_info['version']).zfill(20)}.checkpoint.{str(i).zfill(10)}.{str(self.checkpoint_info['parts']).zfill(10)}.parquet"
+                f"{self.path}/_delta_log/{str(self.checkpoint_info['version']).zfill(20)}.checkpoint.{str(i).zfill(10)}.{str(self.checkpoint_info['parts']).zfill(10)}.parquet" # pylint: disable=line-too-long
                 for i in range(1, self.checkpoint_info["parts"] + 1)
             ]
         else:
             checkpoint_files = [
-                f"{self.path}/_delta_log/{str(self.checkpoint_info['version']).zfill(20)}.checkpoint.parquet"
+                f"{self.path}/_delta_log/{str(self.checkpoint_info['version']).zfill(20)}.checkpoint.parquet" # pylint: disable=line-too-long
             ]
         return checkpoint_files
 
