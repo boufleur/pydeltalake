@@ -1,3 +1,16 @@
+"""A Python interface to Delta Lake
+
+This library makes it possible to for users to connect to a storage endpoint
+and read files using delta protocol. You can find more information about Delta
+Lake on https://github.com/delta-io/delta/blob/master/PROTOCOL.md.
+
+  Typical usage example:
+
+  from pydeltalake.lib import DeltaLake
+
+  dl = DeltaLake("/tests/data/delta-0.2.0")
+  dl.files()
+"""
 import os
 import time
 import json
