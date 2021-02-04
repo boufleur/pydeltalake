@@ -118,7 +118,6 @@ class DeltaLake:
         return checkpoint_files
 
     def _get_checkpoints(self):
-        # TODO: handle missing multi-part files
         checkpoints = []
         for checkpoint_file in self._get_checkpoint_files():
             with self.filesystem.open(checkpoint_file) as file_handler:
