@@ -147,4 +147,6 @@ class DeltaLake:
         if self.checkpoint_info and replay_checkpoint:
             self._replay_checkpoint_and_update_fileset()
             self._replay_delta_and_update_fileset(self.checkpoint_info["version"] + 1)
+        else:
+            self._replay_delta_and_update_fileset()
         return self.fileset
