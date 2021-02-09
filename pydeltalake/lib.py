@@ -108,16 +108,16 @@ class DeltaLake:
     def _get_checkpoint_files(self):
         if "parts" in self.checkpoint_info.keys():
             checkpoint_files = [
-                f"{self.path}/_delta_log/" +
-                f"{str(self.checkpoint_info['version']).zfill(20)}" +
-                f".checkpoint.{str(i).zfill(10)}" +
-                f".{str(self.checkpoint_info['parts']).zfill(10)}.parquet"
+                f"{self.path}/_delta_log/"
+                + f"{str(self.checkpoint_info['version']).zfill(20)}"
+                + f".checkpoint.{str(i).zfill(10)}"
+                + f".{str(self.checkpoint_info['parts']).zfill(10)}.parquet"
                 for i in range(1, self.checkpoint_info["parts"] + 1)
             ]
         else:
             checkpoint_files = [
-                f"{self.path}/_delta_log/" +
-                f"{str(self.checkpoint_info['version']).zfill(20)}.checkpoint.parquet"
+                f"{self.path}/_delta_log/"
+                + f"{str(self.checkpoint_info['version']).zfill(20)}.checkpoint.parquet"
             ]
         return checkpoint_files
 
@@ -144,7 +144,9 @@ class DeltaLake:
             A list of the parquet files on the delta lake.
 
         """
-        if self.timestamp or not self.checkpoint_info:  # time travel needs to replay all
+        if (
+            self.timestamp or not self.checkpoint_info
+        ):  # time travel needs to replay all
             self._replay_delta_and_update_fileset()
         else:
             self._replay_checkpoint_and_update_fileset()
