@@ -140,13 +140,9 @@ class DeltaLake:
             A list of the parquet files on the delta lake.
 
         """
-        replay_checkpoint = True
-        if self.timestamp:  # time travel needs to replay all
-            replay_checkpoint = False
+        if self.timestamp or not self.checkpoint_info:  # time travel needs to replay all
             self._replay_delta_and_update_fileset()
-        if self.checkpoint_info and replay_checkpoint:
+        else:
             self._replay_checkpoint_and_update_fileset()
             self._replay_delta_and_update_fileset(self.checkpoint_info["version"] + 1)
-        else:
-            self._replay_delta_and_update_fileset()
         return self.fileset
