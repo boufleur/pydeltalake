@@ -1,6 +1,4 @@
-import os
 import sys
-from datetime import datetime
 
 sys.path.append(".")
 from pydeltalake.lib import DeltaLake
