@@ -58,7 +58,7 @@ class DeltaLake:
         self.checkpoint_info = self._get_checkpoint_info()
         self.fileset = set()
 
-    def _set_timestamp(self, time_travel):
+    def _set_timestamp(self, time_travel: datetime):
         if not time_travel:
             self.timestamp = None
         else:
