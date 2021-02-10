@@ -129,18 +129,18 @@ class DeltaLake:
             ]
         return checkpoint_files
 
-    def _get_checkpoints(self) -> List[DataFrame]:
+    def _get_checkpoint(self) -> DataFrame:
         checkpoints = []
         for checkpoint_file in self._get_checkpoint_files():
             with self.filesystem.open(checkpoint_file) as file_handler:
                 checkpoints.append(pandas.read_parquet(file_handler))
-        return checkpoints
+        return pandas.concat(checkpoints)
 
     def _replay_checkpoint_and_update_fileset(self):
-        for checkpoint in self._get_checkpoints():
-            self.fileset |= set(
-                x["path"] for x in checkpoint[checkpoint["add"].notnull()]["add"]
-            )
+        checkpoint = self._get_checkpoint()
+        self.fileset |= set(
+            x["path"] for x in checkpoint[checkpoint["add"].notnull()]["add"]
+        )
 
     def files(self) -> Set:
         """Fetches the parquet file list from the delta lake.
