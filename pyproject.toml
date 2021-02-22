@@ -6,7 +6,7 @@ authors = ["Marcio Boufleur <boufleur@gmailcom>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.7.1"
 fsspec = "^0.8.5"
 ndjson = "^0.3.1"
 pandas = "^1.2.1"
