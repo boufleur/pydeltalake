@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "pydeltalake"
+version = "0.0.1"
+description = "A Delta Lake implementation for Python"
+authors = ["Marcio Boufleur <boufleur@gmailcom>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fsspec = "^0.8.5"
+ndjson = "^0.3.1"
+pandas = "^1.2.1"
+pyarrow = "^3.0.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.2"
+black = "^20.8b1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
